@@ -3,7 +3,7 @@
 # Cara Menjalankan Project Mock-Up-Application-Test
 
  ## 1. Clone repository
-git clone git@github.com:Chafithafid30/Mock-Up-Application-Test.git
+git clone git@github.com:Chafithafid30/Work-Order-Managementr-System.git
 
  ## 2. Menyiapkan environment
  ubah penamaan file .env.example menjadi .env
