@@ -53,45 +53,7 @@ docker compose ps
 - Kredensial demo dan penyimpanan token menggunakan localStorage hanya digunakan untuk kebutuhan pengujian lokal. Pada lingkungan produksi, kredensial harus dikelola berdasarkan environment serta mempertimbangkan penggunaan cookie HttpOnly dan SameSite yang aman dengan perlindungan CSRF (Cross-Site Request Forgery).
 
 # Penjelasan Singkat Struktur Project
-work-order-system/
-├── backend/
-│   └── src/
-│       ├── auth/
-│       │   ├── decorators/
-│       │   ├── dto/
-│       │   ├── guards/
-│       │   ├── interfaces/
-│       │   └── strategies/
-│       ├── common/
-│       │   ├── entities/
-│       │   ├── enums/
-│       │   ├── http/
-│       │   └── services/
-│       ├── config/
-│       ├── database/
-│       │   └── migrations/
-│       ├── health/
-│       ├── sparepart-requests/
-│       │   └── dto/
-│       ├── users/
-│       ├── work-orders/
-│       │   ├── dto/
-│       │   └── repositories/
-│       ├── app.module.ts
-│       └── main.ts
-├── frontend/
-│   └── src/
-│       ├── components/
-│       ├── context/
-│       ├── lib/
-│       ├── pages/
-│       ├── main.tsx
-│       ├── styles.css
-│       └── types.ts
-├── .env
-├── .gitignore
-├── docker-compose.yml
-└── README.md
+![](https://github.com/Chafithafid30/Work-Order-Managementr-System/blob/master/Folder%20Structure.png)
 
 - Backend memisahkan penanganan permintaan HTTP di dalam controller, pengaturan alur kerja di dalam service, proses penyimpanan data melalui repository interface, serta pengelolaan struktur database melalui migration.
 
