@@ -1,6 +1,6 @@
 # Work-Order-Management-System
 
-# Cara Menjalankan Project Mock-Up-Application-Test
+# Cara Menjalankan Project Work Order Management System
 
  ## 1. Clone repository
 git clone git@github.com:Chafithafid30/Work-Order-Managementr-System.git
@@ -8,18 +8,7 @@ git clone git@github.com:Chafithafid30/Work-Order-Managementr-System.git
  ## 2. Menyiapkan environment
  ubah penamaan file .env.example menjadi .env
 
- ## 3. Menjalankan seluruh aplikasi
- docker compose up --build
-
-## 4. Memeriksa status container
-docker compose ps
-
-## 5. Kemudian buka link dibawah ini
-- Aplikasi: (http://localhost:5173)
-- Swagger API: (http://localhost:3000/api/docs)
-- Health check: (http://localhost:3000/api/health)
-
-## 6. Menghubungkan dengan DBeaver
+ ## 3. Menghubungkan dengan DBeaver
 
 1. Buka DBeaver.
 2. Pilih **Database → New Database Connection**.
@@ -32,3 +21,14 @@ docker compose ps
 9. Klik **Test Connection**.
 10. Klik **Finish**.
 11. Buka `Schemas → public → Tables`. 
+ 
+## 4. Menjalankan seluruh aplikasi
+docker compose up --build
+
+## 5. Memeriksa status container
+docker compose ps
+
+## 6. Kemudian buka link dibawah ini
+- Aplikasi: (http://localhost:5173)
+- Swagger API: (http://localhost:3000/api/docs)
+- Health check: (http://localhost:3000/api/health)
