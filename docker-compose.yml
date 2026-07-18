@@ -1,0 +1,63 @@
+services:
+  database:
+    image: postgres:17-alpine
+    container_name: work-order-database
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-work_order_db}
+      POSTGRES_USER: ${POSTGRES_USER:-work_order_user}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-work_order_password}
+    ports:
+      - "${DATABASE_PORT:-5432}:5432"
+    volumes:
+      # Persist PostgreSQL data when containers are recreated.
+      - work_order_postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-work_order_user} -d ${POSTGRES_DB:-work_order_db}"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+    restart: unless-stopped
+
+  backend:
+    build:
+      context: ./backend
+    container_name: work-order-backend
+    environment:
+      NODE_ENV: production
+      PORT: 3000
+      DATABASE_URL: postgresql://${POSTGRES_USER:-work_order_user}:${POSTGRES_PASSWORD:-work_order_password}@database:5432/${POSTGRES_DB:-work_order_db}
+      JWT_SECRET: ${JWT_SECRET:-local-development-secret-change-before-production-2026}
+      JWT_EXPIRES_IN_SECONDS: ${JWT_EXPIRES_IN_SECONDS:-3600}
+    ports:
+      - "${BACKEND_PORT:-3000}:3000"
+    depends_on:
+      # Start NestJS only after PostgreSQL accepts connections.
+      database:
+        condition: service_healthy
+    init: true
+    healthcheck:
+      # The script is included in the backend image and uses Node.js only.
+      test: ["CMD", "node", "healthcheck.js"]
+      interval: 10s
+      timeout: 5s
+      # Give TypeORM migrations time to finish before counting failures.
+      start_period: 20s
+      retries: 10
+    restart: unless-stopped
+
+  frontend:
+    build:
+      context: ./frontend
+      args:
+        VITE_API_URL: ${VITE_API_URL:-http://localhost:3000/api}
+    container_name: work-order-frontend
+    ports:
+      - "${FRONTEND_PORT:-5173}:80"
+    depends_on:
+      # Prevent the UI from starting against an API that is not ready yet.
+      backend:
+        condition: service_healthy
+    restart: unless-stopped
+
+volumes:
+  work_order_postgres_data:
